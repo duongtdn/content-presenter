@@ -5,7 +5,10 @@ import { render } from 'react-dom'
 
 import ContentPresenter from '../dist/content-presenter'
 import ex from '../dist/example'
-import bindRender from '../dist/example-react'
+import exBindRender from '../dist/example-react'
+
+import yt from '../dist/youtube'
+import ytBindRender from '../dist/youtube-react'
 
 class APP extends Component {
   constructor(props) {
@@ -17,9 +20,9 @@ class APP extends Component {
 
   render() {
     const data = [
-      {_id: 0, player: 'EXAMPLE', src: 'content source for index 0'},
-      {_id: 1, player: 'EXAMPLE', src: 'content source for index 1'},
-      {_id: 2, player: 'EXAMPLE', src: 'content source for index 2'}
+      {_id: 0, player: 'YOUTUBE', src: 'R9ZE97rnBqE'},
+      {_id: 1, player: 'EXAMPLE', src: 'r6bkETisayg'},
+      {_id: 2, player: 'YOUTUBE', src: 'r6bkETisayg'}
     ]
     return (
       <div>
@@ -27,7 +30,7 @@ class APP extends Component {
           <button onClick={() => this.setState({index : this.state.index-1})}> Back </button>
           <button onClick={() => this.setState({index : this.state.index+1})}> Next </button>
         </div>
-        <ContentPresenter players = {[bindRender(ex)]}
+        <ContentPresenter players = {[exBindRender(ex), ytBindRender(yt)]}
                           data = {data}
                           index = {this.state.index}
                           onContentLoaded = {() => console.log(`Content loaded: ${this.state.index}`)}
