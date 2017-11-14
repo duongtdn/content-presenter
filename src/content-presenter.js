@@ -10,6 +10,11 @@ export default class ContentPresenter extends Component {
 
     this.presenter = null;
 
+    this.state = { loaded : false };
+
+    this.onContentLoaded = this.onContentLoaded.bind(this);
+    this.onContentFinished = this.onContentFinished.bind(this);
+
   }
 
   componentWillMount() {
@@ -23,8 +28,8 @@ export default class ContentPresenter extends Component {
       initialIndex, 
       {
         autoLoadNext : false,
-        onContentLoaded : props.onContentLoaded || null,
-        onContentFinished : props.onContentFinished || null
+        onContentLoaded : this.onContentLoaded,
+        onContentFinished : this.onContentFinished
       }
     );
 
@@ -36,16 +41,42 @@ export default class ContentPresenter extends Component {
   }
 
   componentDidMount() {
-    this._loadContent();
+    this._loadContent(this.props.index);
   }
 
-  componentDidUpdate() {
-    this._loadContent();
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.index !== this.props.index) {
+      this.setState({ loaded : false });
+      this._loadContent(nextProps.index);      
+    }
+  }  
+
+  shouldComponentUpdate(nextProps, nextState){
+    console.log(this.state.loaded)
+    return this.state.loaded;    
   }
 
   render() {
     const index = this.props && this.props.index;
     const data = this.props && this.props.data;
+
+    return (
+      <div> {
+        this.props.players.map(player => {
+          const display = data[index].player === player.playerName ? 'block' : 'none';
+          return (
+            <div key = {player.playerName} style = {{display}}>
+              { this.presenter.render(player.playerName) }
+            </div>
+          )
+        })
+        
+      } </div>
+    )
+
+
+/*
     if (index >=0 && index < data.length) {
       return(
         <div>
@@ -55,10 +86,19 @@ export default class ContentPresenter extends Component {
     } else {
       return (<div />)
     }
+*/
   }
 
-  _loadContent() {
-    const index = this.props && this.props.index;
+  onContentLoaded(evt) {
+    this.setState({ loaded : true });
+    this.props.onContentLoaded && this.props.onContentLoaded(evt);
+  }
+
+  onContentFinished(evt) {
+    this.props.onContentFinished && this.props.onContentFinished(evt);
+  }
+
+  _loadContent(index) {
     const data = this.props && this.props.data;
     if (index >=0 && index < data.length) {
       this.presenter && this.presenter.load(index);

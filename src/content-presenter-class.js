@@ -42,11 +42,19 @@ export default class ContentPresenterClass {
     }
     return player;
   }
+
+  getValidPlayerByName(playerName) {
+    const player = this.players[playerName];
+    if (!player) {
+      throw new Error("Player does not supported yet. Please add the player plugin");
+    }
+    return player;
+  }
   
 
   load(index) {
     const content = this.data[index];
-    this.getValidPlayerByIndex(index).load(content.src);   
+    this.getValidPlayerByIndex(index).stop().load(content.src);   
     this.currentIndex = index;     
     return this;
   }
@@ -56,8 +64,8 @@ export default class ContentPresenterClass {
     return this;
   }
 
-  render(index) {
-    return this.getValidPlayerByIndex(index).render();
+  render(playerName) {
+    return this.getValidPlayerByName(playerName).render();
   }
 
   onLoaded(evt) {    
