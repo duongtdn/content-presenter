@@ -3,13 +3,12 @@
 const YOUTUBE_API_SOURCE = "https://www.youtube.com/iframe_api";
 
 export default class youtubePlayerPlugin {
-  constructor(options) {
-    this.options = options
+  constructor(events) {
 
     this.ready = false;
     this._instance = null;
 
-    this.events = {...options};
+    this.events = {...events};
 
     this.queue = [];
 

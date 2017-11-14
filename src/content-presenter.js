@@ -10,7 +10,7 @@ export default class ContentPresenter extends Component {
 
     this.presenter = null;
 
-    this.state = { loaded : false };
+    this.contentLoaded = false;
 
     this.onContentLoaded = this.onContentLoaded.bind(this);
     this.onContentFinished = this.onContentFinished.bind(this);
@@ -46,15 +46,20 @@ export default class ContentPresenter extends Component {
 
 
   componentWillReceiveProps(nextProps) {
+    /* to prevent player such as youtube show up last screen before loaded 
+       new video, the state loaded is used.
+       when index is change, reset loaded and call player load method
+       since loaded is false, it will not invoke render
+       later when player finished loading, the callback event will set state 
+       loaded to true and invoke another render */
     if (nextProps.index !== this.props.index) {
-      this.setState({ loaded : false });
+      this.contentLoaded = false;
       this._loadContent(nextProps.index);      
     }
   }  
 
   shouldComponentUpdate(nextProps, nextState){
-    console.log(this.state.loaded)
-    return this.state.loaded;    
+    return this.contentLoaded;    
   }
 
   render() {
@@ -90,7 +95,8 @@ export default class ContentPresenter extends Component {
   }
 
   onContentLoaded(evt) {
-    this.setState({ loaded : true });
+    this.contentLoaded = true;
+    this.setState({});    
     this.props.onContentLoaded && this.props.onContentLoaded(evt);
   }
 

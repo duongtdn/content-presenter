@@ -1,8 +1,8 @@
 "use strict"
 
 export default class examplePlayerPlugin {
-  constructor(options) {
-    this.options = options
+  constructor(events) {
+    this.events = {...events};
 
   }
 
@@ -10,10 +10,9 @@ export default class examplePlayerPlugin {
     console.log('Example player init')
   }
 
-  load(src) {
-    console.log(`Example Player load src=${src}`)    
+  load(src) {    
     setTimeout(() => {
-      this.onLoaded && this.onLoaded();;
+      this.events.onLoaded && this.events.onLoaded();;
     },1000);
     setTimeout(() => {
       this.finish();
@@ -21,12 +20,11 @@ export default class examplePlayerPlugin {
   }
 
   stop() {
-    return this.finish();
+    return this;
   }
 
   finish() {
-    console.log('Example Player finished')
-    this.onFinished && this.onFinished();
+    this.events.onFinished && this.events.onFinished();
     return this;
   }
 
