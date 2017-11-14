@@ -7,10 +7,7 @@ class ExampleComponent extends Component {
     super(props);
   }
 
-  componentWillMount() {
-  }
-
-  render() {
+  render() {  
     return (
       <div>
         PLAYER example
