@@ -41,6 +41,11 @@ export default class youtubePlayerPlugin {
     return this;
   }
 
+  finish() {
+    this.stop();
+    return this;
+  }
+
   onReady() {
     this.ready = true;
     if (this.queue.length > 0) {
