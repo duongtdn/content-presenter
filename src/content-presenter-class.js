@@ -14,10 +14,10 @@ export default class ContentPresenterClass {
   addPlayer(player) {
     if (player.playerName) {
       /* create a plugin, add event listener then init */
-      const newPlayer = new player();
-      
-      newPlayer.onLoaded = this.onLoaded.bind(this);
-      newPlayer.onFinished = this.onFinished.bind(this);      
+      const newPlayer = new player({
+        onLoaded : this.onLoaded.bind(this),
+        onFinished : this.onFinished.bind(this)
+      });            
 
       ['playerName', 'version', 'render'].forEach(prop => newPlayer[prop] = player[prop]);
 
@@ -40,20 +40,19 @@ export default class ContentPresenterClass {
     if (!player) {
       throw new Error("Player does not supported yet. Please add the player plugin");
     }
-
     return player;
   }
   
 
   load(index) {
     const content = this.data[index];
-    this.getValidPlayerByIndex(index).load(content.src);
-    this.currentIndex = index;
+    this.getValidPlayerByIndex(index).load(content.src);   
+    this.currentIndex = index;     
     return this;
   }
 
-  finish(index) {
-    this.getValidPlayerByIndex(index).finish();
+  stop(index) {
+    this.getValidPlayerByIndex(index).stop();
     return this;
   }
 
@@ -61,7 +60,7 @@ export default class ContentPresenterClass {
     return this.getValidPlayerByIndex(index).render();
   }
 
-  onLoaded(evt) {
+  onLoaded(evt) {    
     this.options && this.options.onContentLoaded && this.options.onContentLoaded(evt);
   }
 

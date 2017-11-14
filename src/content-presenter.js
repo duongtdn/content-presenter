@@ -49,7 +49,7 @@ export default class ContentPresenter extends Component {
     if (index >=0 && index < data.length) {
       return(
         <div>
-          {this.presenter.render(this.props.index)}
+          {this.presenter.render(index)}
         </div>
       )
     } else {
