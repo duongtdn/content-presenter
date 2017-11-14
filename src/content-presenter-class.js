@@ -1,11 +1,11 @@
 "use strict"
 
 export default class ContentPresenterClass {
-  constructor(data = [], initialIndex = 0, options = null) {
+  constructor(data = [], initialIndex = 0, events = null) {
 
     this.data = data
     this.currentIndex = initialIndex;
-    this.options = options;
+    this.events = events;
 
     this.players = {};
 
@@ -69,15 +69,11 @@ export default class ContentPresenterClass {
   }
 
   onLoaded(evt) {    
-    this.options && this.options.onContentLoaded && this.options.onContentLoaded(evt);
+    this.events && this.events.onContentLoaded && this.events.onContentLoaded(evt);
   }
 
   onFinished(evt) {  
-    this.options && this.options.onContentFinished && this.options.onContentFinished(evt);
-    if (this.currentIndex < this.data.length - 1) {
-      this.currentIndex++;
-      this.options && this.options.autoLoadNext && this.load(this.currentIndex);
-    }
+    this.events && this.events.onContentFinished && this.events.onContentFinished(evt);
   }
 
 }

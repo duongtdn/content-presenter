@@ -27,7 +27,6 @@ export default class ContentPresenter extends Component {
       data, 
       initialIndex, 
       {
-        autoLoadNext : false,
         onContentLoaded : this.onContentLoaded,
         onContentFinished : this.onContentFinished
       }
