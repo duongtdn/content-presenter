@@ -2,7 +2,7 @@
 
 const YOUTUBE_API_SOURCE = "https://www.youtube.com/iframe_api";
 
-export default class youtubePlayerPlugin {
+export default class YoutubePlayerPlugin {
   constructor(events) {
 
     this.ready = false;
@@ -91,5 +91,5 @@ export default class youtubePlayerPlugin {
 
 }
 
-youtubePlayerPlugin.playerName = 'YOUTUBE'
-youtubePlayerPlugin.version = '1.0.0'
+YoutubePlayerPlugin.playerName = 'YOUTUBE'
+YoutubePlayerPlugin.version = '1.0.0'
