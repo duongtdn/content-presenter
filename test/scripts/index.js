@@ -6,11 +6,8 @@ import { render } from 'react-dom'
 import ContentPresenter from '../dist/content-presenter'
 import bindRender from '../dist/bind-render'
 
-import ExamplePlayerPlugin from '../dist/example-player-plugin'
-import ExampleReactComponent from '../dist/example-react-component'
-
-import YoutubePlayerPlugin from '../dist/youtube-player-plugin'
-import YoutubeReactComponent from '../dist/youtube-react-component'
+import ExamplePlayerReactPlugin from '../dist/example-player-react-plugin'
+import YoutubePlayerReactPlugin from '../dist/youtube-player-react-plugin'
 
 class APP extends Component {
   constructor(props) {
@@ -19,8 +16,8 @@ class APP extends Component {
     this.state = { index : 0};
 
     this.players = [
-      bindRender(YoutubePlayerPlugin, YoutubeReactComponent),
-      bindRender(ExamplePlayerPlugin, ExampleReactComponent),
+      YoutubePlayerReactPlugin,
+      ExamplePlayerReactPlugin,
     ];
 
   }

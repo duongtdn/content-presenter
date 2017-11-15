@@ -2,7 +2,10 @@
 
 import React, { Component } from 'react'
 
-export default class ExampleReactComponent extends Component {
+import ExamplePlayerPlugin from './example-player-plugin'
+import bindRender from '../src/bind-render'
+
+class ExampleReactComponent extends Component {
   constructor(props) {
     super(props);
   }
@@ -23,3 +26,5 @@ export default class ExampleReactComponent extends Component {
   }
 
 }
+
+export default bindRender(ExamplePlayerPlugin, ExampleReactComponent)

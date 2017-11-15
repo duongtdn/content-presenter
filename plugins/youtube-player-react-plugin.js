@@ -2,7 +2,10 @@
 
 import React, { Component } from 'react'
 
-export default class YoutubeReactComponent extends Component {
+import YoutubePlayerPlugin from './youtube-player-plugin'
+import bindRender from '../src/bind-render'
+
+class YoutubeReactComponent extends Component {
   constructor(props) {
     super(props);
   }
@@ -19,3 +22,5 @@ export default class YoutubeReactComponent extends Component {
   }
 
 }
+
+export default bindRender(YoutubePlayerPlugin, YoutubeReactComponent)
