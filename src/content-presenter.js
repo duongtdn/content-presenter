@@ -10,10 +10,14 @@ export default class ContentPresenter extends Component {
 
     this.presenter = null;
 
-    this.state = { contentLoaded : false };
+    this.state = { 
+      contentLoaded : false, 
+      error : false
+    };
 
     this.onContentLoaded = this.onContentLoaded.bind(this);
     this.onContentFinished = this.onContentFinished.bind(this);
+    this.onError = this.onError.bind(this)
 
   }
 
@@ -28,7 +32,8 @@ export default class ContentPresenter extends Component {
       initialIndex, 
       {
         onContentLoaded : this.onContentLoaded,
-        onContentFinished : this.onContentFinished
+        onContentFinished : this.onContentFinished,
+        onError: this.onError
       }
     );
 
@@ -52,7 +57,7 @@ export default class ContentPresenter extends Component {
        later when player finished loading, the callback event will set state 
        loaded to true and invoke another render */
     if (nextProps.index !== this.props.index) {
-      this.setState({ contentLoaded : false });
+      this.setState({ contentLoaded : false, error : false });
       this._loadContent(nextProps.index);      
     }
   }  
@@ -75,15 +80,17 @@ export default class ContentPresenter extends Component {
     this.props.onContentFinished && this.props.onContentFinished(evt);
   }
 
+  onError(err) {
+    this.setState({ error : true });
+    this.props.onError && this.props.onError(err);
+  }
+
   _loadContent(index) {
-    const data = this.props && this.props.data;
-    if (index >=0 && index < data.length) {
-      this.presenter && this.presenter.load(index);
-    }    
+    this.presenter && this.presenter.load(index);
   }
 
   _renderLoading() {
-    const display = this.state.contentLoaded ? 'none' : 'block';
+    const display = this.state.error || this.state.contentLoaded ? 'none' : 'block';
     return (
       <div style = {{display}}>
         Loading...
@@ -97,10 +104,11 @@ export default class ContentPresenter extends Component {
     return (
       <div> {
         this.props.players.map(player => {
-          const display = this.state.contentLoaded ? 
-                          data[index].player === player.playerName ? 'block' : 'none'
-                          :
-                          'none';
+          let display = 'none';
+          if (this.state.contentLoaded && index >=0 && index < data.length &&
+              data[index].player === player.playerName) {
+                display = 'block';
+              }
           return (
             <div key = {player.playerName} style = {{display}}>
               { this.presenter.render(player.playerName) }

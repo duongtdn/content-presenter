@@ -49,18 +49,19 @@ export default class ContentPresenterClass {
       throw new Error("Player does not supported yet. Please add the player plugin");
     }
     return player;
-  }
-  
+  }  
 
   load(index) {
-    const content = this.data[index];
-    this.getValidPlayerByIndex(index).stop().load(content.src);   
-    this.currentIndex = index;     
+    if (this.checkIndex(index)) {
+      const content = this.data[index];
+      this.getValidPlayerByIndex(index).stop().load(content.src);   
+      this.currentIndex = index;     
+    }    
     return this;
   }
 
   stop(index) {
-    this.getValidPlayerByIndex(index).stop();
+    this.checkIndex(index) && this.getValidPlayerByIndex(index).stop();
     return this;
   }
 
@@ -68,12 +69,27 @@ export default class ContentPresenterClass {
     return this.getValidPlayerByName(playerName).render();
   }
 
-  onLoaded(evt) {    
+  onLoaded(evt) {
     this.events && this.events.onContentLoaded && this.events.onContentLoaded(evt);
   }
 
-  onFinished(evt) {  
+  onFinished(evt) {
     this.events && this.events.onContentFinished && this.events.onContentFinished(evt);
+  }
+
+  checkIndex(index) {
+    const err = {};
+    if (index < 0) {
+      err.underRange = true;      
+    }
+    if (index >= this.data.length) {
+      err.overRange = true;
+    }
+    if (Object.keys(err).length > 0) {
+      this.events && this.events.onError && this.events.onError(err);
+      return false;
+    }    
+    return true;
   }
 
 }

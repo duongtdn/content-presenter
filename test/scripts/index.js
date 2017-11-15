@@ -29,7 +29,8 @@ class APP extends Component {
     const data = [
       {_id: 0, player: 'YOUTUBE', src: 'R9ZE97rnBqE'},
       {_id: 1, player: 'EXAMPLE', src: 'r6bkETisayg'},
-      {_id: 2, player: 'YOUTUBE', src: 'r6bkETisayg'}
+      {_id: 2, player: 'YOUTUBE', src: 'r6bkETisayg'},
+      {_id: 3, player: 'EXAMPLE', src: 'r6bkETisayg'}
     ]
     return (
       <div>
@@ -42,6 +43,7 @@ class APP extends Component {
                           index = {this.state.index}
                           onContentLoaded = {() => console.log(`Content loaded: ${this.state.index}`)}
                           onContentFinished = {() => console.log(`Content finished: ${this.state.index}`)}
+                          onError = {err => console.log(err)}
                           />
       </div>
     )
