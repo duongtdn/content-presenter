@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 
-class YoutubeComponent extends Component {
+class YoutubeReactComponent extends Component {
   constructor(props) {
     super(props);
   }
