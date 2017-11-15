@@ -7,7 +7,7 @@ export default class YoutubePlayerPlugin {
 
     this.ready = false;
     this._instance = null;
-
+    this.active = false;
     this.events = {...events};
 
     this.queue = [];
@@ -25,6 +25,7 @@ export default class YoutubePlayerPlugin {
   }
 
   load(src) {
+    this.active = true;
     if (!this.ready) {
       this.queue.push(src);
       return this;
@@ -36,6 +37,7 @@ export default class YoutubePlayerPlugin {
   }
 
   stop() {
+    this.active = false;
     this.ready &&  this._instance && this._instance.stopVideo();
     return this;
   }
@@ -47,7 +49,7 @@ export default class YoutubePlayerPlugin {
 
   onReady() {
     this.ready = true;
-    if (this.queue.length > 0) {
+    if (this.active && this.queue.length > 0) { // only load when active
       const src = this.queue.pop();
       this.load(src);
     }
@@ -85,7 +87,8 @@ export default class YoutubePlayerPlugin {
   }
 
   _fire(event, ...args) {
-    this.events[event] && this.events[event](...args);
+    /* only fire event when active */    
+    this.active && this.events[event] && this.events[event](...args);
     return this;
   }
 
