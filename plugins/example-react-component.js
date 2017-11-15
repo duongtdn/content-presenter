@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 
-class ExampleComponent extends Component {
+export default class ExampleReactComponent extends Component {
   constructor(props) {
     super(props);
   }
@@ -22,15 +22,4 @@ class ExampleComponent extends Component {
     this.props.player.finish();
   }
 
-}
-
-function render() {
-  return(
-    <ExampleComponent player = {this} />
-  )
-}
-
-export default function bindRender(player) {
-  player.render = render;
-  return player;
 }

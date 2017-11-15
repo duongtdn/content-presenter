@@ -1,6 +1,6 @@
 "use strict"
 
-export default class examplePlayerPlugin {
+export default class ExamplePlayerPlugin {
   constructor(events) {
     this.events = {...events};
 
@@ -30,5 +30,5 @@ export default class examplePlayerPlugin {
 
 }
 
-examplePlayerPlugin.playerName = 'EXAMPLE'
-examplePlayerPlugin.version = '1.0.0'
+ExamplePlayerPlugin.playerName = 'EXAMPLE'
+ExamplePlayerPlugin.version = '1.0.0'

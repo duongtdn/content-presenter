@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 
-class YoutubeReactComponent extends Component {
+export default class YoutubeReactComponent extends Component {
   constructor(props) {
     super(props);
   }
@@ -18,15 +18,4 @@ class YoutubeReactComponent extends Component {
     this.props.player.finish();
   }
 
-}
-
-function render() {
-  return(
-    <YoutubeComponent player = {this} />
-  )
-}
-
-export default function bindRender(player) {
-  player.render = render;
-  return player;
 }
