@@ -16,7 +16,8 @@ export default class ContentPresenterClass {
       /* create a plugin, add event listener then init */
       const newPlayer = new player({
         onLoaded : this.onLoaded.bind(this),
-        onFinished : this.onFinished.bind(this)
+        onFinished : this.onFinished.bind(this),
+        onTimeout : this.onTimeout.bind(this)
       });            
 
       ['playerName', 'version', 'render'].forEach(prop => newPlayer[prop] = player[prop]);
@@ -76,6 +77,10 @@ export default class ContentPresenterClass {
 
   onFinished(evt) {
     this.events && this.events.onContentFinished && this.events.onContentFinished(evt);
+  }
+
+  onTimeout() {
+    this.events && this.events.onError && this.events.onError({timeout : true}); 
   }
 
   checkIndex(index) {
