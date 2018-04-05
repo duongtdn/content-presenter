@@ -2,6 +2,6 @@ dist/
 node_modules/
 test/index.js
 test/bundle.js
-npm-debug.log
-debug.log
+npm-debug.*
+debug.*
 
