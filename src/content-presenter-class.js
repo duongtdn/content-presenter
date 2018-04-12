@@ -52,13 +52,18 @@ export default class ContentPresenterClass {
     return player;
   }  
 
-  load(index) {
+  loadContent(index) {
     this.getValidPlayerByIndex(this.currentIndex).stop(); // stop playing current content
     if (this.checkIndex(index)) {
       const content = this.data[index];
       this.getValidPlayerByIndex(index).load(content.src);   
       this.currentIndex = index;     
     }    
+    return this;
+  }
+
+  loadData(data) {
+    this.data = data;
     return this;
   }
 

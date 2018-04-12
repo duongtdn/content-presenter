@@ -56,10 +56,16 @@ export default class ContentPresenter extends Component {
        since loaded is false, it will not invoke render
        later when player finished loading, the callback event will set state 
        loaded to true and invoke another render */
-    if (nextProps.index !== this.props.index) {
-      this.setState({ contentLoaded : false, error : false });
-      this._loadContent(nextProps.index);      
+    this.setState({ contentLoaded : false, error : false });
+    if (nextProps.data !== this.props.data) {
+      this._loadData(nextProps.data);      
     }
+    if (nextProps.index !== this.props.index) {
+      this._loadContent(nextProps.index);      
+    } else {
+      this._loadContent(this.props.index);
+    }
+
   }  
 
   render() {
@@ -86,7 +92,11 @@ export default class ContentPresenter extends Component {
   }
 
   _loadContent(index) {
-    this.presenter && this.presenter.load(index);
+    this.presenter && this.presenter.loadContent(index);
+  }
+
+  _loadData(data) {
+    this.presenter && this.presenter.loadData(data);
   }
 
   _renderLoading() {
@@ -102,7 +112,7 @@ export default class ContentPresenter extends Component {
     const index = this.props && this.props.index;
     const data = this.props && this.props.data; 
     return (
-      <div> {
+      <div className = 'content-container'> {
         this.props.players.map(player => {
           let display = 'none';
           if (this.state.contentLoaded && index >=0 && index < data.length &&
