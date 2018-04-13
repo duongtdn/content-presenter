@@ -1,6 +1,6 @@
 {
   "name": "content-presenter",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "e-learning project: a library for presenting a course content",
   "main": "index.js",
   "scripts": {
