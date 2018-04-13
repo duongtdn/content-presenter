@@ -76,11 +76,11 @@ export default class ContentPresenterClass {
   }
 
   onLoaded(evt) {
-    this.events && this.events.onContentLoaded && this.events.onContentLoaded(evt);
+    this.events && this.events.onLoadedContent && this.events.onLoadedContent(evt);
   }
 
   onFinished(evt) {
-    this.events && this.events.onContentFinished && this.events.onContentFinished(evt);
+    this.events && this.events.onFinishedContent && this.events.onFinishedContent(evt);
   }
 
   onTimeout() {

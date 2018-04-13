@@ -15,8 +15,8 @@ export default class ContentPresenter extends Component {
       error : false
     };
 
-    this.onContentLoaded = this.onContentLoaded.bind(this);
-    this.onContentFinished = this.onContentFinished.bind(this);
+    this.onLoadedContent = this.onLoadedContent.bind(this);
+    this.onFinishedContent = this.onFinishedContent.bind(this);
     this.onError = this.onError.bind(this)
 
   }
@@ -31,8 +31,8 @@ export default class ContentPresenter extends Component {
       data, 
       initialIndex, 
       {
-        onContentLoaded : this.onContentLoaded,
-        onContentFinished : this.onContentFinished,
+        onLoadedContent : this.onLoadedContent,
+        onFinishedContent : this.onFinishedContent,
         onError: this.onError
       }
     );
@@ -77,13 +77,13 @@ export default class ContentPresenter extends Component {
     )
   }
 
-  onContentLoaded(evt) {
+  onLoadedContent(evt) {
     this.setState({ contentLoaded : true });    
-    this.props.onContentLoaded && this.props.onContentLoaded(evt);
+    this.props.onLoadedContent && this.props.onLoadedContent(evt);
   }
 
-  onContentFinished(evt) {
-    this.props.onContentFinished && this.props.onContentFinished(evt);
+  onFinishedContent(evt) {
+    this.props.onFinishedContent && this.props.onFinishedContent(evt);
   }
 
   onError(err) {
