@@ -57,16 +57,16 @@ export default class ContentPresenter extends Component {
        later when player finished loading, the callback event will set state 
        loaded to true and invoke another render */
     this.setState({ contentLoaded : false, error : false });
+    this._stopCurrent(this.props.index);
     if (nextProps.data !== this.props.data) {
-      this._loadData(nextProps.data);      
+      this._loadData(nextProps.data);     
     }
     if (nextProps.index !== this.props.index) {
       this._loadContent(nextProps.index);      
     } else {
       this._loadContent(this.props.index);
     }
-
-  }  
+  }
 
   render() {
     return (
@@ -89,6 +89,10 @@ export default class ContentPresenter extends Component {
   onError(err) {
     this.setState({ error : true });
     this.props.onError && this.props.onError(err);
+  }
+
+  _stopCurrent(index) {
+    this.presenter && this.presenter.stop(index);
   }
 
   _loadContent(index) {
