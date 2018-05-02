@@ -1,13 +1,13 @@
 "use strict"
 
 export default class ContentPresenterClass {
-  constructor(data = [], initialIndex = 0, events = null) {
+  constructor(events = null) {
 
-    this.data = data
-    this.currentIndex = initialIndex;
     this.events = events;
 
     this.players = {};
+
+    this.activePlayer = null;
 
   }
 
@@ -31,19 +31,6 @@ export default class ContentPresenterClass {
     return this;
   }
 
-  getValidPlayerByIndex(index) {
-    if (index < 0 | index >= this.data.length) {
-      throw new Error("Content does not exist");
-    }
-
-    const content = this.data[index];
-    const player = this.players[content.player];
-    if (!player) {
-      throw new Error("Player does not supported yet. Please add the player plugin");
-    }
-    return player;
-  }
-
   getValidPlayerByName(playerName) {
     const player = this.players[playerName];
     if (!player) {
@@ -52,22 +39,18 @@ export default class ContentPresenterClass {
     return player;
   }  
 
-  loadContent(index) {
-    if (this.checkIndex(index)) {
-      const content = this.data[index];
-      this.getValidPlayerByIndex(index).load(content.src);   
-      this.currentIndex = index;     
-    }    
-    return this;
-  }
-
-  loadData(data) {
-    this.data = data;
+  loadContent(content) {
+    if (content && content.player && content.src) {
+      this.activePlayer = this.getValidPlayerByName(content.player);
+      this.activePlayer.load(content.src);    
+    } else {
+      throw new Error('Invalid content format')
+    }   
     return this;
   }
 
   stop(index) {
-    this.checkIndex(index) && this.getValidPlayerByIndex(index).stop();
+    this.activePlayer && this.activePlayer.stop();
     return this;
   }
 
@@ -85,21 +68,6 @@ export default class ContentPresenterClass {
 
   onTimeout() {
     this.events && this.events.onError && this.events.onError({timeout : true}); 
-  }
-
-  checkIndex(index) {
-    const err = {};
-    if (index < 0) {
-      err.underRange = true;      
-    }
-    if (index >= this.data.length) {
-      err.overRange = true;
-    }
-    if (Object.keys(err).length > 0) {
-      this.events && this.events.onError && this.events.onError(err);
-      return false;
-    }    
-    return true;
   }
 
 }
