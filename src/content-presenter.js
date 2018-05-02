@@ -46,15 +46,9 @@ export default class ContentPresenter extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-    /* to prevent player such as youtube show up last screen before loaded 
-       new video, the state loaded is used.
-       when index is change, reset loaded and call player load method
-       since loaded is false, it will not invoke render
-       later when player finished loading, the callback event will set state 
-       loaded to true and invoke another render */
-    this.setState({ contentLoaded : false, error : false });
-    this._stopCurrent();
     if (nextProps.content !== this.props.content) {
+      this.setState({ contentLoaded : false, error : false });
+      this._stopCurrent();
       this._loadContent(nextProps.content);      
     }
   }
