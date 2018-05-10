@@ -17,7 +17,8 @@ export default class ContentPresenter extends Component {
 
     this.onLoadedContent = this.onLoadedContent.bind(this);
     this.onFinishedContent = this.onFinishedContent.bind(this);
-    this.onError = this.onError.bind(this)
+    this.onError = this.onError.bind(this);
+    this.onResize = this.onResize.bind(this);
 
   }
 
@@ -29,7 +30,8 @@ export default class ContentPresenter extends Component {
       {
         onLoadedContent : this.onLoadedContent,
         onFinishedContent : this.onFinishedContent,
-        onError: this.onError
+        onError: this.onError,
+        onResize: this.onResize
       }
     );
 
@@ -74,6 +76,10 @@ export default class ContentPresenter extends Component {
   onError(err) {
     this.setState({ error : true });
     this.props.onError && this.props.onError(err);
+  }
+
+  onResize(height) {
+    this.props.onResize && this.props.onResize(height);
   }
 
   _stopCurrent() {

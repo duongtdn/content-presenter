@@ -17,7 +17,8 @@ export default class ContentPresenterClass {
       const newPlayer = new player({
         onLoaded : this.onLoaded.bind(this),
         onFinished : this.onFinished.bind(this),
-        onTimeout : this.onTimeout.bind(this)
+        onTimeout : this.onTimeout.bind(this),
+        onResize : this.onResize.bind(this)
       });            
 
       ['playerName', 'version', 'render'].forEach(prop => newPlayer[prop] = player[prop]);
@@ -68,6 +69,10 @@ export default class ContentPresenterClass {
 
   onTimeout() {
     this.events && this.events.onError && this.events.onError({timeout : true}); 
+  }
+
+  onResize(height) {
+    this.events && this.events.onResize && this.events.onResize(height); 
   }
 
 }
