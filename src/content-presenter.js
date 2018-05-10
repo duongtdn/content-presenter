@@ -55,7 +55,7 @@ export default class ContentPresenter extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{height: '100%'}} >
         {this._renderLoading()}
         {this._renderPlayer()}
       </div>
