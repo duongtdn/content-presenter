@@ -1,11 +1,11 @@
 {
   "name": "content-presenter",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "e-learning project: a library for presenting a course content",
   "main": "index.js",
   "scripts": {
     "transpile": "babel src -d dist && babel plugins -d dist && babel test/scripts -d test",
-    "prepublish": "npm run transpile",
+    "prepare": "npm run build",
     "build": "rm -rf dist && npm run transpile && cp -r src/css dist/css",
     "start": "npm run build && webpack && node test/server"
   },

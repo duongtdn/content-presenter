@@ -93,8 +93,11 @@ export default class ContentPresenter extends Component {
   _renderLoading() {
     const display = this.state.error || this.state.contentLoaded ? 'none' : 'block';
     return (
-      <div style = {{display}}>
-        Loading...
+      <div className = "content-container w3-display-container" style = {{ display }}>
+      <div className="w3-display-middle">
+        <h3> <i className="fa fa-circle-o-notch w3-large w3-spin" /> Loading... </h3>
+      </div>
+        
       </div>
     )
   }
