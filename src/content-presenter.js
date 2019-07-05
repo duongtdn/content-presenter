@@ -1,124 +1,79 @@
 "use strict"
 
-import React, { Component } from 'react'
+export default class ContentPresenterClass {
+  constructor(events = null) {
 
-import ContentPresenterClass from './content-presenter-class'
+    this.events = events
 
-export default class ContentPresenter extends Component {
-  constructor (props) {
-    super(props);
+    this.players = {}
 
-    this.presenter = null;
-
-    this.state = { 
-      contentLoaded : false, 
-      error : false
-    };
-
-    this.onLoadedContent = this.onLoadedContent.bind(this);
-    this.onFinishedContent = this.onFinishedContent.bind(this);
-    this.onError = this.onError.bind(this);
-    this.onResize = this.onResize.bind(this);
+    this.activePlayer = null
 
   }
 
-  componentWillMount() {
-    const props = this.props; 
+  addPlayer(player) {
+    if (player.playerName) {
+      /* create a plugin, add event listener then init */
+      const newPlayer = new player({
+        onLoaded : this.onLoaded.bind(this),
+        onFinished : this.onFinished.bind(this),
+        onTimeout : this.onTimeout.bind(this),
+        onResize : this.onResize.bind(this)
+      })
 
-    // initialize a presenter
-    this.presenter = new ContentPresenterClass(
-      {
-        onLoadedContent : this.onLoadedContent,
-        onFinishedContent : this.onFinishedContent,
-        onError: this.onError,
-        onResize: this.onResize
-      }
-    );
+      const props = ['playerName', 'version', 'render']
+      props.forEach(prop => newPlayer[prop] = player[prop])
 
-    // add players to presenter
-    if (props && props.players) {
-      props.players.forEach(player => this.presenter.addPlayer(player));
+      this.players[player.playerName] = newPlayer
+
+      this.players[player.playerName].init()
+
     }
 
+    return this;
   }
 
-  componentDidMount() {
-    this._loadContent(this.props.content);
-  }
-
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.content !== this.props.content) {
-      this.setState({ contentLoaded : false, error : false });
-      this._stopCurrent();
-      this._loadContent(nextProps.content);      
+  getValidPlayerByName(playerName) {
+    const player = this.players[playerName]
+    if (!player) {
+      throw new Error("Player does not supported yet. Please add the player plugin")
     }
+    return player
   }
 
-  render() {
-    return (
-      <div style={{height: '100%'}} >
-        {this._renderLoading()}
-        {this._renderPlayer()}
-      </div>
-    )
+  loadContent(content) {
+    if (content && content.player && content.src) {
+      this.activePlayer = this.getValidPlayerByName(content.player)
+      this.activePlayer.load(content.src)
+    } else {
+      throw new Error('Invalid content format')
+    }
+    return this
   }
 
-  onLoadedContent(evt) {
-    this.setState({ contentLoaded : true });    
-    this.props.onLoadedContent && this.props.onLoadedContent(evt);
+  stop(index) {
+    this.activePlayer && this.activePlayer.stop()
+    return this
   }
 
-  onFinishedContent(evt) {
-    this.props.onFinishedContent && this.props.onFinishedContent(evt);
+  render(playerName) {
+    return this.getValidPlayerByName(playerName).render()
   }
 
-  onError(err) {
-    this.setState({ error : true });
-    this.props.onError && this.props.onError(err);
+  onLoaded(evt) {
+    this.events && this.events.onContentLoaded && this.events.onContentLoaded(evt)
+  }
+
+  onFinished(evt) {
+    this.events && this.events.onContentFinished && this.events.onContentFinished(evt)
+  }
+
+  onTimeout() {
+    this.events && this.events.onError && this.events.onError({timeout : true})
   }
 
   onResize(height) {
-    this.props.onResize && this.props.onResize(height);
-  }
-
-  _stopCurrent() {
-    this.presenter && this.presenter.stop();
-  }
-
-  _loadContent(index) {
-    this.presenter && this.presenter.loadContent(index);
-  }
-
-  _renderLoading() {
-    const display = this.state.error || this.state.contentLoaded ? 'none' : 'block';
-    return (
-      <div className = "content-container w3-display-container" style = {{ display }}>
-      <div className="w3-display-middle">
-        <h3> <i className="fa fa-circle-o-notch w3-large w3-spin" /> Loading... </h3>
-      </div>
-        
-      </div>
-    )
-  }
-
-  _renderPlayer() {
-    return (
-      <div className = 'content-container'> {
-        this.props.players.map(player => {
-          let display = 'none';
-          if (this.state.contentLoaded && this.props.content &&
-              this.props.content.player === player.playerName) {
-                display = 'block';
-              }
-          return (
-            <div key = {player.playerName} style = {{display}}>
-              { this.presenter.render(player.playerName) }
-            </div>
-          )
-        })       
-      } </div>
-    )
+    this.events && this.events.onResize && this.events.onResize(height)
   }
 
 }

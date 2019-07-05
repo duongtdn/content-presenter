@@ -3,11 +3,11 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 
-import ContentPresenter from '../dist/content-presenter'
-import bindRender from '../dist/bind-render'
+import ContentPresenter from '../../src/ContentPresenter'
+import bindRender from '../../src/bind-render'
 
-import ExamplePlayerReactPlugin from '../dist/example-player-react-plugin'
-import YoutubePlayerReactPlugin from '../dist/youtube-player-react-plugin'
+import ExamplePlayerReactPlugin from '../../plugins/example-player-react-plugin'
+// import YoutubePlayerReactPlugin from '../dist/youtube-player-react-plugin'
 
 class APP extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class APP extends Component {
     this.state = { index : 0};
 
     this.players = [
-      YoutubePlayerReactPlugin,
+      // YoutubePlayerReactPlugin,
       ExamplePlayerReactPlugin,
     ];
 
@@ -24,9 +24,9 @@ class APP extends Component {
 
   render() {
     const data = [
-      {_id: 0, player: 'YOUTUBE', src: 'R9ZE97rnBqE'},
+      // {_id: 0, player: 'YOUTUBE', src: 'R9ZE97rnBqE'},
       {_id: 1, player: 'EXAMPLE', src: 'r6bkETisayg'},
-      {_id: 2, player: 'YOUTUBE', src: 'r6bkETisayg'},
+      // {_id: 2, player: 'YOUTUBE', src: 'r6bkETisayg'},
       {_id: 3, player: 'EXAMPLE', src: 'r6bkETisayg'}
     ]
     return (
@@ -36,8 +36,7 @@ class APP extends Component {
           <button onClick={() => this.setState({index : this.state.index+1})}> Next </button>
         </div>
         <ContentPresenter players = {this.players}
-                          data = {data}
-                          index = {this.state.index}
+                          content = {data[this.state.index]}
                           onContentLoaded = {() => console.log(`Content loaded: ${this.state.index}`)}
                           onContentFinished = {() => console.log(`Content finished: ${this.state.index}`)}
                           onError = {err => console.log(err)}

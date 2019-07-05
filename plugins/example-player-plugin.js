@@ -10,12 +10,12 @@ export default class ExamplePlayerPlugin {
     console.log('Example player init')
   }
 
-  load(src) {    
+  load(src) {
     setTimeout(() => {
-      this.events.onLoaded && this.events.onLoaded();;
-    },1000);
+      this.events.onLoaded && this.events.onLoaded()
+    },1000)
     setTimeout(() => {
-      this.finish();
+      this.finish()
     },2000);
   }
 
@@ -24,8 +24,8 @@ export default class ExamplePlayerPlugin {
   }
 
   finish() {
-    this.events.onFinished && this.events.onFinished();
-    return this;
+    this.events.onFinished && this.events.onFinished()
+    return this
   }
 
 }

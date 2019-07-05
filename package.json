@@ -4,10 +4,7 @@
   "description": "e-learning project: a library for presenting a course content",
   "main": "index.js",
   "scripts": {
-    "transpile": "babel src -d dist && babel plugins -d dist && babel test/scripts -d test",
-    "prepare": "npm run build",
-    "build": "rm -rf dist && npm run transpile && cp -r src/css dist/css",
-    "start": "npm run build && webpack && node test/server"
+    "start": "webpack-dev-server --config webpack.dev.config.js  --port 8000 --host 0.0.0.0 --watch-poll"
   },
   "repository": {
     "type": "git",
@@ -20,17 +17,19 @@
   "author": "duongtdn",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^15.4.0",
-    "react-dom": "^15.4.0"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-plugin-transform-object-rest-spread": "^6.16.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "express": "^4.16.2",
-    "react": "^15.4.0",
-    "react-dom": "^15.4.0",
-    "webpack": "^2.2.1"
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }
