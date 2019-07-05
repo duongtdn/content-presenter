@@ -22,7 +22,7 @@ class ExampleReactComponent extends Component {
   }
 
   finish() {
-    this.props.player.finish();
+    this.props.player.finish()
   }
 
 }

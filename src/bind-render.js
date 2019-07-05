@@ -6,7 +6,7 @@ function render(Component) {
   return React.createElement(Component, {player: this});
 }
 
-export default function bindRender(player, Component) {
-  player.render = function () { return render.call(player, Component) };
-  return player;
+export default function bindRender(Player, Component) {
+  Player.render = function () { return render.call(this, Component) };
+  return Player;
 }

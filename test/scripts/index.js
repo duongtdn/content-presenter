@@ -21,7 +21,6 @@ class APP extends Component {
     ];
 
   }
-
   render() {
     const data = [
       // {_id: 0, player: 'YOUTUBE', src: 'R9ZE97rnBqE'},
@@ -40,9 +39,14 @@ class APP extends Component {
                           onContentLoaded = {() => console.log(`Content loaded: ${this.state.index}`)}
                           onContentFinished = {() => console.log(`Content finished: ${this.state.index}`)}
                           onError = {err => console.log(err)}
-                          />
+                          onResize = {this.onResize}
+        />
       </div>
     )
+  }
+  onResize(height) {
+    console.log(height)
+    // this.setState({ height : height + 'px'})
   }
 }
 

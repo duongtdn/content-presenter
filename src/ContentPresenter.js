@@ -48,7 +48,6 @@ export default class extends Component {
   }
 
   render() {
-    console.log('render invoked')
     return (
       <div style={{height: '100%'}} >
         {this._renderLoading()}

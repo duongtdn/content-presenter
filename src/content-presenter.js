@@ -51,7 +51,7 @@ export default class ContentPresenterClass {
     return this
   }
 
-  stop(index) {
+  stop() {
     this.activePlayer && this.activePlayer.stop()
     return this
   }
