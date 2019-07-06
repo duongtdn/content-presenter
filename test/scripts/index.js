@@ -4,10 +4,9 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 
 import ContentPresenter from '../../src/ContentPresenter'
-import bindRender from '../../src/bind-render'
 
 import ExamplePlayerReactPlugin from '../../plugins/example-player-react-plugin'
-// import YoutubePlayerReactPlugin from '../dist/youtube-player-react-plugin'
+import { YoutubePlayerReactPlugin } from 'youtube-player-plugin'
 
 class APP extends Component {
   constructor(props) {
@@ -16,16 +15,16 @@ class APP extends Component {
     this.state = { index : 0};
 
     this.players = [
-      // YoutubePlayerReactPlugin,
+      YoutubePlayerReactPlugin,
       ExamplePlayerReactPlugin,
     ];
 
   }
   render() {
     const data = [
-      // {_id: 0, player: 'YOUTUBE', src: 'R9ZE97rnBqE'},
+      {_id: 0, player: 'YOUTUBE', src: 'hKRUPYrAQoE'},
       {_id: 1, player: 'EXAMPLE', src: 'r6bkETisayg'},
-      // {_id: 2, player: 'YOUTUBE', src: 'r6bkETisayg'},
+      {_id: 2, player: 'YOUTUBE', src: 'qwJj2EpC8vg'},
       {_id: 3, player: 'EXAMPLE', src: 'r6bkETisayg'}
     ]
     return (
