@@ -97,9 +97,6 @@ export default class extends Component {
 
   _renderPlayer() {
     const activePlayer = this.props.players.find(player => this.props.content.player === player.playerName)
-    console.log(this.props.players)
-    console.log(activePlayer)
-    console.log(activePlayer && activePlayer.media)
     return (
       <div className = {`${activePlayer && activePlayer.media ? 'media-container': ''}`}> {
         this.props.players.map(player => {
