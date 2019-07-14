@@ -87,18 +87,21 @@ export default class extends Component {
   _renderLoading() {
     const display = this.state.error || this.state.contentLoaded ? 'none' : 'block'
     return (
-      <div className = "content-container w3-display-container" style = {{ display }}>
-      <div className="w3-display-middle">
-        <h3> <i className="fa fa-circle-o-notch w3-large w3-spin" /> Loading... </h3>
-      </div>
-
+      <div className = "media-container w3-display-container" style = {{ display }}>
+        <div className="w3-display-middle">
+          <h3> <i className="fa fa-circle-o-notch w3-large w3-spin" /> Loading... </h3>
+        </div>
       </div>
     )
   }
 
   _renderPlayer() {
+    const activePlayer = this.props.players.find(player => this.props.content.player === player.playerName)
+    console.log(this.props.players)
+    console.log(activePlayer)
+    console.log(activePlayer && activePlayer.media)
     return (
-      <div className = 'content-container'> {
+      <div className = {`${activePlayer && activePlayer.media ? 'media-container': ''}`}> {
         this.props.players.map(player => {
           let display = 'none'
           if (this.state.contentLoaded && this.props.content && this.props.content.player === player.playerName) {
